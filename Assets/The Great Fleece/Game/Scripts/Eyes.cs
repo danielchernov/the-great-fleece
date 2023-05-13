@@ -11,6 +11,7 @@ public class Eyes : MonoBehaviour
     {
         if (collider.tag == "Player")
         {
+            AudioManager.Instance.StopAudios();
             _gameOverCutscene.SetActive(true);
         }
     }

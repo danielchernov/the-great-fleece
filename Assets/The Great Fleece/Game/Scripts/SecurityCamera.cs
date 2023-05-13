@@ -29,6 +29,8 @@ public class SecurityCamera : MonoBehaviour
             _cameraAnimator[i].speed = 0;
         }
         yield return new WaitForSeconds(1);
+
+        AudioManager.Instance.StopAudios();
         _gameOverCutscene.SetActive(true);
     }
 }

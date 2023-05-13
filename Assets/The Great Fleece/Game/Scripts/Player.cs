@@ -14,7 +14,13 @@ public class Player : MonoBehaviour
     private GameObject _coinPrefab;
 
     [SerializeField]
+    private GameObject _clickVFX;
+
+    [SerializeField]
     private AudioClip _coinSFX;
+
+    [SerializeField]
+    private GameObject[] _guards;
 
     private bool _coinTossed = false;
 
@@ -34,11 +40,12 @@ public class Player : MonoBehaviour
             {
                 _playerAgent.SetDestination(rayHit.point);
                 _playerAnimator.SetBool("isWalking", true);
+                Instantiate(_clickVFX, rayHit.point, Quaternion.identity);
             }
         }
 
         float distance = Vector3.Distance(transform.position, rayHit.point);
-        if (distance < 0.2f)
+        if (distance < 0.5f)
         {
             _playerAnimator.SetBool("isWalking", false);
         }
@@ -62,15 +69,13 @@ public class Player : MonoBehaviour
 
     void SendAItoCoin(Vector3 coinPosition)
     {
-        GameObject[] guards = GameObject.FindGameObjectsWithTag("Guard1");
-
-        if (guards != null)
+        if (_guards != null)
         {
-            for (int i = 0; i < guards.Length; i++)
+            for (int i = 0; i < _guards.Length; i++)
             {
-                GuardAI guardAI = guards[i].GetComponent<GuardAI>();
-                NavMeshAgent guardAgent = guards[i].GetComponent<NavMeshAgent>();
-                Animator guardAnimator = guards[i].GetComponent<Animator>();
+                GuardAI guardAI = _guards[i].GetComponent<GuardAI>();
+                NavMeshAgent guardAgent = _guards[i].GetComponent<NavMeshAgent>();
+                Animator guardAnimator = _guards[i].GetComponent<Animator>();
 
                 guardAI.SentToCoin = true;
                 guardAgent.SetDestination(coinPosition);

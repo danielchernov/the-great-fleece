@@ -5,9 +5,6 @@ using UnityEngine;
 public class VOTrigger : MonoBehaviour
 {
     [SerializeField]
-    private AudioSource _VOAudioSource;
-
-    [SerializeField]
     private AudioClip _clipToPlay;
 
     private bool playedAudio = false;
@@ -16,8 +13,8 @@ public class VOTrigger : MonoBehaviour
     {
         if (collider.tag == "Player" && !playedAudio)
         {
+            AudioManager.Instance.PlayVoiceOver(_clipToPlay);
             playedAudio = true;
-            _VOAudioSource.PlayOneShot(_clipToPlay, 0.5f);
         }
     }
 }

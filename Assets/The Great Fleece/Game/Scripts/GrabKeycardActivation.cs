@@ -16,16 +16,18 @@ public class GrabKeycardActivation : MonoBehaviour
     {
         if (collider.tag == "Player" && !_alreadyPlayed)
         {
+            GameManager.Instance.HasCard = true;
             _alreadyPlayed = true;
-            StartCoroutine(WaitAndDeactivate());
+            StartCoroutine(WaitAndDeactivate(collider.gameObject));
         }
     }
 
-    IEnumerator WaitAndDeactivate()
+    IEnumerator WaitAndDeactivate(GameObject player)
     {
         _grabKeyCutscene.SetActive(true);
         yield return new WaitForSeconds(6);
         _grabKeyCutscene.SetActive(false);
         Camera.main.transform.position = _cameraPosition.position;
+        player.transform.position = new Vector3(-4f, -2f, -110f);
     }
 }
